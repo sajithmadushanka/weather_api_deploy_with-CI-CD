@@ -1,7 +1,7 @@
 // utils/filterCurrentWeather.js
 exports.filterCurrentWeather = function (data) {
   return {
-    location: data.location,
+    location: data.location ? data.location.name : 'Unknown',
     country: data.location ? data.location.country : 'Unknown',
     region: data.location ? data.location.region : 'Unknown',
     localtime: data.location ? data.location.localtime : 'Unknown',
