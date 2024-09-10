@@ -30,7 +30,7 @@ jobs:
       run: |
         IMAGE_NAME="${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REPOSITORY }}/weather-app"
         echo "Using image name: $IMAGE_NAME"
-        docker build -t $IMAGE_NAME .
+        docker build -t $IMAGE_NAME .  # Use the current directory as the context
         docker push $IMAGE_NAME
 
     # Step 5: Deploy to Cloud Run
