@@ -1,29 +1,28 @@
 const express = require('express');
-const weatherApi = require('./apis');
-const { filterCurrentWeather } = require('./filterCurrentWeather');
+const { weatherApi } = require('./apis');
+const { filterCurrentWeather } = require('./utils/filterCurrentWeather');
 const app = express();
-const port = 3000;
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
-    }
-);
-app.get('/temperature',async (req, res) => {
-    const city = req.query.city;
-    const days = req.query.days;
-    console.log('city:', city);
-    const temperatureRes =  await weatherApi(city, days)
-    if (!temperatureRes) {
-        res.status(404).send('City not found');
-        return
-    }
-    // console.log(temperatureRes);
-    const filterTemperature = filterCurrentWeather(temperatureRes);
-    res.send(filterTemperature);
+  res.send('Hello World!');
+});
 
+app.get('/temperature', async (req, res) => {
+  const city = req.query.city;
+  const days = req.query.days;
+
+  try {
+    const temperatureRes = await weatherApi(city, days);
+
+    if (!temperatureRes) {
+      res.status(404).send('City not found');
+    } else {
+      const filteredData = filterCurrentWeather(temperatureRes);
+      res.status(200).json(filteredData);
     }
-);
-app.listen(port, () => {
-    console.log(`app listening at http://localhost:${port}`);
-    }
-);
+  } catch (error) {
+    res.status(500).send('Error fetching temperature data');
+  }
+});
+
+module.exports = app;

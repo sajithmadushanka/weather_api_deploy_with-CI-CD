@@ -25,4 +25,4 @@ const weatherApi = async (q, days) => {
   }
 };
 
-module.exports = weatherApi;
+module.exports = {weatherApi};
