@@ -28,9 +28,10 @@ jobs:
     # Step 4: Build and push Docker image to Artifact Registry
     - name: Build and push Docker image
       run: |
-        weather-app=${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REPOSITORY }}/weather-app
-        docker build -t $weather-app .
-        docker push $weather-app
+        IMAGE_NAME="${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REPOSITORY }}/weather-app"
+        echo "Using image name: $IMAGE_NAME"
+        docker build -t $IMAGE_NAME .
+        docker push $IMAGE_NAME
 
     # Step 5: Deploy to Cloud Run
     - name: Deploy to Cloud Run
