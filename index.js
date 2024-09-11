@@ -4,7 +4,7 @@ const { filterCurrentWeather } = require('./utils/filterCurrentWeather');
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Hello Mash!');
 });
 
 app.get('/temperature', async (req, res) => {
