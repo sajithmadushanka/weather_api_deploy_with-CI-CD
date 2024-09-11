@@ -4,9 +4,11 @@ const { filterCurrentWeather } = require('./utils/filterCurrentWeather');
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send('Hello Mash!');
+  res.send('Hello World!');
 });
-
+app.get('/hello', (req, res)=>{
+  res.send("Hello Mash!")
+})
 app.get('/temperature', async (req, res) => {
   const city = req.query.city;
   const days = req.query.days;

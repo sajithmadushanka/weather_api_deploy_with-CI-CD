@@ -21,7 +21,7 @@ jobs:
         service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
         project_id: ${{ secrets.GCP_PROJECT_ID }}
 
-    # Step 3: Configure Docker for Artifact Registry
+    # Step 3: Configure Docker for Google Artifact Registry
     - name: Configure Docker for Google Artifact Registry
       run: gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev
 
