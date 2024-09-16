@@ -46,4 +46,3 @@ jobs:
           --platform=managed \
           --region=${{ secrets.GCP_REGION }} \
           --allow-unauthenticated \
-          --set-env-vars URL=${{ secrets.URL }},API_KEY=${{ secrets.API_KEY }},HOST=${{ secrets.HOST }}
