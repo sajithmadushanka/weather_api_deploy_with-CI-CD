@@ -30,12 +30,16 @@ jobs:
     - name: Configure Docker for Google Artifact Registry
       run: gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev
 
-    # Build and push Docker image
+    # Build and push Docker image with environment variables
     - name: Build and push Docker image
       run: |
         IMAGE_NAME="${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REPOSITORY }}/weather-app"
         echo "Using image name: $IMAGE_NAME"
-        docker build -t $IMAGE_NAME .  # Use the current directory as the context
+        docker build \
+          --build-arg URL=${{ secrets.URL }} \
+          --build-arg API_KEY=${{ secrets.API_KEY }} \
+          --build-arg HOST=${{ secrets.HOST }} \
+          -t $IMAGE_NAME .
         docker push $IMAGE_NAME
 
     # Deploy to Cloud Run
