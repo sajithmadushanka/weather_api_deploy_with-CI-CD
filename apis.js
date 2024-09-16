@@ -1,10 +1,7 @@
 const axios = require("axios");
 const winston = require('winston');
 
-// Remove dotenv in production
-if (process.env.NODE_ENV !== 'production') {
   require("dotenv").config();
-}
 
 const weatherApi = async (q, days) => {
   const options = {
