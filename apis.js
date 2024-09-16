@@ -1,15 +1,16 @@
 const axios = require("axios");
 const winston = require('winston');
-require("dotenv").config();
+
+// Remove dotenv in production
+if (process.env.NODE_ENV !== 'production') {
+  require("dotenv").config();
+}
 
 const weatherApi = async (q, days) => {
   const options = {
     method: "GET",
     url: process.env.URL,
-    params: {
-      q,
-      days,
-    },
+    params: { q, days },
     headers: {
       "x-rapidapi-key": process.env.API_KEY,
       "x-rapidapi-host": process.env.HOST,
