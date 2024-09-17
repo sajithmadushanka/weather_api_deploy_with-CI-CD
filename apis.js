@@ -2,6 +2,10 @@ const axios = require("axios");
 const winston = require('winston');
 require("dotenv").config();
 
+console.log("URL:", process.env.URL);
+console.log("API_KEY:", process.env.API_KEY);
+console.log("HOST:", process.env.HOST);
+
 const weatherApi = async (q, days) => {
   const options = {
     method: "GET",
