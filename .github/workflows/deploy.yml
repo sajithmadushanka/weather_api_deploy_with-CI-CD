@@ -10,46 +10,54 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Step 1: Checkout the code
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Authenticate to Google Cloud using a service account key
+    # Step 2: Authenticate to Google Cloud using a service account key
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
       with:
         credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
-    # Set up Google Cloud SDK
+    # Step 3: Set up Google Cloud SDK
     - name: Set up Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
       with:
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         export_default_credentials: true
 
-    # Configure Docker for Google Artifact Registry
+    # Step 4: Configure Docker for Google Artifact Registry
     - name: Configure Docker for Google Artifact Registry
       run: gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev
 
-    # Set environment variables from GitHub Secrets
+    # Step 5: Set environment variables from GitHub Secrets
     - name: Set environment variables from GitHub Secrets
       run: |
         echo "URL=${{ secrets.URL }}" >> $GITHUB_ENV
         echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
         echo "HOST=${{ secrets.HOST }}" >> $GITHUB_ENV
 
-    # Build and push Docker image with environment variables
+    # Step 6: Log environment variables for debugging (Optional)
+    - name: Check environment variables
+      run: |
+        echo "URL: $URL"
+        echo "API_KEY: $API_KEY"
+        echo "HOST: $HOST"
+
+    # Step 7: Build and push Docker image with environment variables
     - name: Build and push Docker image
       run: |
         IMAGE_NAME="${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REPOSITORY }}/weather-app"
         echo "Using image name: $IMAGE_NAME"
         docker build \
-          --build-arg URL=${{ secrets.URL }} \
-          --build-arg API_KEY=${{ secrets.API_KEY }} \
-          --build-arg HOST=${{ secrets.HOST }} \
+          --build-arg URL=$URL \
+          --build-arg API_KEY=$API_KEY \
+          --build-arg HOST=$HOST \
           -t $IMAGE_NAME .
         docker push $IMAGE_NAME
 
-    # Deploy to Cloud Run
+    # Step 8: Deploy to Cloud Run with environment variables
     - name: Deploy to Cloud Run
       run: |
         gcloud run deploy weather-app \
@@ -57,4 +65,4 @@ jobs:
           --platform=managed \
           --region=${{ secrets.GCP_REGION }} \
           --allow-unauthenticated \
-          --set-env-vars=URL=${{ secrets.URL }},API_KEY=${{ secrets.API_KEY }},HOST=${{ secrets.HOST }}
+          --set-env-vars=URL=$URL,API_KEY=$API_KEY,HOST=$HOST
