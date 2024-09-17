@@ -1,14 +1,13 @@
 const axios = require("axios");
-const winston = require('winston');
+const winston = require("winston");
 
-  require("dotenv").config();
-
-
+require("dotenv").config();
 
 const weatherApi = async (q, days) => {
   console.log("URL:", process.env.URL);
   console.log("API_KEY:", process.env.API_KEY);
   console.log("HOST:", process.env.HOST);
+  console.log("project id", process.env.GCP_PROJECT_ID);
 
   const options = {
     method: "GET",
@@ -24,7 +23,7 @@ const weatherApi = async (q, days) => {
     const response = await axios.request(options);
     return response.data;
   } catch (error) {
-    console.log(error)
+    console.log(error);
     winston.error(error);
     return null;
   }
