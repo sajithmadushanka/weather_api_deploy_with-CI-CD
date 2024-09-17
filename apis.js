@@ -1,6 +1,7 @@
 const axios = require("axios");
 const winston = require('winston');
-require("dotenv").config();
+
+  require("dotenv").config();
 
 console.log("URL:", process.env.URL);
 console.log("API_KEY:", process.env.API_KEY);
@@ -10,10 +11,7 @@ const weatherApi = async (q, days) => {
   const options = {
     method: "GET",
     url: process.env.URL,
-    params: {
-      q,
-      days,
-    },
+    params: { q, days },
     headers: {
       "x-rapidapi-key": process.env.API_KEY,
       "x-rapidapi-host": process.env.HOST,
