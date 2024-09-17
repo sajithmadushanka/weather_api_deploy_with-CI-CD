@@ -12,6 +12,7 @@ app.get('/hello', (req, res)=>{
 app.get('/temperature', async (req, res) => {
   const city = req.query.city;
   const days = req.query.days;
+  console.log(city, days)
 
   try {
     const temperatureRes = await weatherApi(city, days);
