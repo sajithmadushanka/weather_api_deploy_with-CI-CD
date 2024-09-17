@@ -30,6 +30,12 @@ jobs:
     - name: Configure Docker for Google Artifact Registry
       run: gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev
 
+    - name: Set environment variables from GitHub Secrets
+        run: |
+          echo "URL=${{ secrets.URL }}" >> $GITHUB_ENV
+          echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
+          echo "HOST=${{ secrets.HOST }}" >> $GITHUB_ENV
+          
     # Build and push Docker image with environment variables
     - name: Build and push Docker image
       run: |
