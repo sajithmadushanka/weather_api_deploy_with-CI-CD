@@ -49,7 +49,7 @@ jobs:
     # Step 7: Build and push Docker image with environment variables
     - name: Build and push Docker image
       run: |
-        IMAGE_NAME="${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REPOSITORY }}/weather-app"
+        IMAGE_NAME="${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REPOSITORY }}/weather-api-deploy-with-ci-cd"
         echo "Using image name: $IMAGE_NAME"
         docker build \
           --build-arg URL=$URL \
@@ -61,8 +61,8 @@ jobs:
     # Step 8: Deploy to Cloud Run with environment variables
     - name: Deploy to Cloud Run
       run: |
-        gcloud run deploy weather-app \
-          --image=${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REPOSITORY }}/weather-app \
+        gcloud run deploy weather-api-deploy-with-ci-cd \
+          --image=${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REPOSITORY }}/weather-api-deploy-with-ci-cd \
           --platform=managed \
           --region=${{ secrets.GCP_REGION }} \
           --allow-unauthenticated \

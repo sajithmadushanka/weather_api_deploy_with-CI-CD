@@ -7,7 +7,7 @@ const weatherApi = async (q, days) => {
   console.log("URL:", process.env.URL);
   console.log("API_KEY:", process.env.API_KEY);
   console.log("HOST:", process.env.HOST);
-  console.log("project id", process.env.GCP_PROJECT_ID);
+  console.log("project ID", process.env.GCP_PROJECT_ID);
 
   const options = {
     method: "GET",
