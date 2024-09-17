@@ -34,6 +34,7 @@ jobs:
     # Step 5: Set environment variables from GitHub Secrets
     - name: Set environment variables from GitHub Secrets
       run: |
+        echo "hello there!"
         echo "URL=${{ secrets.URL }}" >> $GITHUB_ENV
         echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
         echo "HOST=${{ secrets.HOST }}" >> $GITHUB_ENV
