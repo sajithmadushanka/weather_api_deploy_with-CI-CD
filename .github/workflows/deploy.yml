@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -26,16 +26,17 @@ jobs:
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         export_default_credentials: true
 
-    # Configure Docker for Artifact Registry
+    # Configure Docker for Google Artifact Registry
     - name: Configure Docker for Google Artifact Registry
       run: gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev
 
+    # Set environment variables from GitHub Secrets
     - name: Set environment variables from GitHub Secrets
-        run: |
-          echo "URL=${{ secrets.URL }}" >> $GITHUB_ENV
-          echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
-          echo "HOST=${{ secrets.HOST }}" >> $GITHUB_ENV
-          
+      run: |
+        echo "URL=${{ secrets.URL }}" >> $GITHUB_ENV
+        echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
+        echo "HOST=${{ secrets.HOST }}" >> $GITHUB_ENV
+
     # Build and push Docker image with environment variables
     - name: Build and push Docker image
       run: |
@@ -56,4 +57,4 @@ jobs:
           --platform=managed \
           --region=${{ secrets.GCP_REGION }} \
           --allow-unauthenticated \
-          --set-env-vars URL=${{ secrets.URL }},API_KEY=${{ secrets.API_KEY }},HOST=${{ secrets.HOST }}
+          --set-env-vars=URL=${{ secrets.URL }},API_KEY=${{ secrets.API_KEY }},HOST=${{ secrets.HOST }}
