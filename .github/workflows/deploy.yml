@@ -65,5 +65,5 @@ jobs:
           --image=${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REPOSITORY }}/weather-api-deploy-with-ci-cd \
           --platform=managed \
           --region=${{ secrets.GCP_REGION }} \
-          --allow-unauthenticated \
+          --allow-authenticated \
           --set-env-vars=URL=$URL,API_KEY=$API_KEY,HOST=$HOST
